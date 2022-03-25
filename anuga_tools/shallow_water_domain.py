@@ -283,6 +283,10 @@ class Domain(Generic_Domain):
         #                   etc
         self.edge_flux_type=num.zeros(len(self.edge_coordinates[:,0])).astype(int)
 
+        # Riverwalls -- initialise with dummy values
+        # Presently only works with DE algorithms, will fail otherwise
+        self.riverwallData = RiverWall(self)
+
         ## Keep track of the fluxes through the boundaries
         ## Only works for DE algorithms at present
         max_time_substeps=3 # Maximum number of substeps supported by any timestepping method
@@ -2907,6 +2911,42 @@ class Domain(Generic_Domain):
 ################################################################################
 # End of class Shallow Water Domain
 ################################################################################
+
+class RiverWall(object):
+    def __init__(self, domain):
+        self.domain=domain
+        default_float=-9.0e+20
+        default_int=-9e+20
+        self.riverwall_elevation=numpy.array([default_float])
+        self.hydraulic_properties_rowIndex=numpy.array([default_int]).astype(int)
+        self.names=[ ]
+        # Default riverwall hydraulic parameters 
+        self.default_riverwallPar={'Qfactor':1.0,  
+                                   's1': 0.9,      
+                                   's2': 0.95,     
+                                   'h1': 1.0,      
+                                   'h2': 1.5       
+                                   }
+
+        # DO NOT CHANGE THE ORDER OF hydraulic_variable_names
+        # It needs to match hard-coded assumptions in C [compute_fluxes_central]
+        # If you add a variable, append it to the end of hydraulic_variable_names
+        self.hydraulic_variable_names=('Qfactor', 's1', 's2', 'h1', 'h2')
+
+        self.ncol_hydraulic_properties=len(self.hydraulic_variable_names)
+        # Variable to hold the riverwall hydraulic properties in a table
+        #  number of rows = number of riverwalls which cover edges in the domain
+        #  number of cols = number of hydraulic variable names
+        self.hydraulic_properties=numpy.array([ [default_float] ])
+
+        # Variable to hold the indices of riverwall edges
+        #    len = number of riverwall edges in the domain
+        self.riverwall_edges=numpy.array([default_int])
+
+        # Input info
+        self.input_riverwall_geo=None
+        self.input_riverwallPar=None
+
 
 #-----------------
 # Flux computation
