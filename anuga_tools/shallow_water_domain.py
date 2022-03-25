@@ -283,11 +283,6 @@ class Domain(Generic_Domain):
         #                   etc
         self.edge_flux_type=num.zeros(len(self.edge_coordinates[:,0])).astype(int)
 
-        # Riverwalls -- initialise with dummy values
-        # Presently only works with DE algorithms, will fail otherwise
-        # import anuga.structures.riverwall
-        # self.riverwallData=anuga.structures.riverwall.RiverWall(self)
-
         ## Keep track of the fluxes through the boundaries
         ## Only works for DE algorithms at present
         max_time_substeps=3 # Maximum number of substeps supported by any timestepping method
