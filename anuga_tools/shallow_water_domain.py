@@ -2917,8 +2917,8 @@ class RiverWall(object):
         self.domain=domain
         default_float=-9.0e+20
         default_int=-9e+20
-        self.riverwall_elevation=numpy.array([default_float])
-        self.hydraulic_properties_rowIndex=numpy.array([default_int]).astype(int)
+        self.riverwall_elevation=num.array([default_float])
+        self.hydraulic_properties_rowIndex=num.array([default_int]).astype(int)
         self.names=[ ]
         # Default riverwall hydraulic parameters 
         self.default_riverwallPar={'Qfactor':1.0,  
@@ -2937,11 +2937,11 @@ class RiverWall(object):
         # Variable to hold the riverwall hydraulic properties in a table
         #  number of rows = number of riverwalls which cover edges in the domain
         #  number of cols = number of hydraulic variable names
-        self.hydraulic_properties=numpy.array([ [default_float] ])
+        self.hydraulic_properties=num.array([ [default_float] ])
 
         # Variable to hold the indices of riverwall edges
         #    len = number of riverwall edges in the domain
-        self.riverwall_edges=numpy.array([default_int])
+        self.riverwall_edges=num.array([default_int])
 
         # Input info
         self.input_riverwall_geo=None
