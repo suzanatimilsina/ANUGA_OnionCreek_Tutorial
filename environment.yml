@@ -1,0 +1,13 @@
+name: anuga-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - cython
+  - numpy
+  - matplotlib
+  - netcdf4
+  - gdal
+  - pip
+  - pip:
+      - Pillow

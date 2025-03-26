@@ -1,0 +1,6 @@
+cython
+numpy
+matplotlib
+netCDF4
+gdal
+Pillow
